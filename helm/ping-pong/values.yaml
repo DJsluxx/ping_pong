@@ -1,0 +1,43 @@
+replicaCount: 2
+
+image:
+  repository: ghcr.io/djsluxx/echo-pong
+  tag: "7.0.0"
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  className: nginx
+  host: ping-pong.local
+
+secretToken: "pp-auth-x346x23y6453yy"
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+containerPort: 8080
+
+startupProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 2
+  failureThreshold: 15
+
+readinessProbe:
+  initialDelaySeconds: 12
+  periodSeconds: 5
+  failureThreshold: 3
+
+livenessProbe:
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  failureThreshold: 3

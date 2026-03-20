@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ping-pong
+description: Ping Pong game HTTP server
+type: application
+version: 7.0.0.0.0
+appVersion: "7.0.0"

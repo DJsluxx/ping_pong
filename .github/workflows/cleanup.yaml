@@ -1,0 +1,24 @@
+name: Cleanup Stale GHCR Images
+
+on:
+  schedule:
+    - cron: "0 3 * * 0" # Every Sunday at 3:00 AM UTC
+  workflow_dispatch:
+
+permissions:
+  packages: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete stale container images
+        uses: snok/container-retention-policy@v3
+        with:
+          account: ${{ github.repository_owner }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          image-names: echo-pong
+          cut-off: 10 days ago UTC
+          keep-n-most-recent: 3
+          skip-tags: latest
+          token-type: github-token
